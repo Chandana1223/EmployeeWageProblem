@@ -1,23 +1,32 @@
-#!/bin/bash
+#!/bin/bash -x
 
 echo "Welcome to Employee Wage Computation"
 
 isPartTime=1
 isFullTime=2
+totalSalary=0
 empRatePerHr=20
-randomCheck=$(( RANDOM % 3 ))
+numofWorkingDays=20
 
-if [ $isFullTime -eq $randomCheck ]
-then
-        empHrs=8
+for (( day=1; day<=$numofWorkingDays; day++ ))
+do
 
-elif [ $isPartTime -eq $randomCheck ]
-then
-        empHrs=4
-else
-	empHrs=0
-fi
+      empCheck=$(( RANDOM % 3 ))
 
-salary=$(( $empHrs * $empRatePerHr ))
+      case $empCheck in
+		$isFullTime)
+			empHrs=8
+                        ;;
+		$isPartTime)
+			empHrs=4
+                        ;;
+		*)
+			empHrs=0
+                        ;;
+	esac
 
-echo "Employee Wage:" $salary
+	salary=$(( $empHrs * $empRatePerHr ))
+	totalSalary=$(( $totalSalary + $salary ))
+
+done
+       echo "Employee wage per month:" $salary
