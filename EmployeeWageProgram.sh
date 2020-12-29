@@ -2,31 +2,38 @@
 
 echo "Welcome to Employee Wage Computation"
 
-isPartTime=1
-isFullTime=2
-totalSalary=0
-empRatePerHr=20
-numofWorkingDays=20
+# CONSTANTS
+IS_PART_TIME=1
+IS_FULL_TIME=2
+salary=0
+MAX_HRS_IN_MONTH=10
+EMP_RATE_PER_HR=20
+NUM_WORKING_DAYS=20
 
-for (( day=1; day<=$numofWorkingDays; day++ ))
+# VARIABLES
+totalEmpworkingHr=0
+totalWorkingDays=0
+
+while [[ $totalEmpWorkingHrs -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $NUM_WORKING_DAYS ]]
 do
+	(( totalWorkingDays++ ))
+	empCheck=$(( RANDOM % 3 ))
 
-      empCheck=$(( RANDOM % 3 ))
-
-      case $empCheck in
-		$isFullTime)
+	case $empCheck in
+		$IS_FULL_TIME)
 			empHrs=8
-                        ;;
-		$isPartTime)
+			;;
+		$IS_PART_TIME)
 			empHrs=4
-                        ;;
+			;;
 		*)
 			empHrs=0
-                        ;;
+			;;
 	esac
 
-	salary=$(( $empHrs * $empRatePerHr ))
-	totalSalary=$(( $totalSalary + $salary ))
+	totalEmpWorkingHrs=$(( $totalEmpWorkingHrs + $empHrs ))
 
 done
-       echo "Employee wage per month:" $salary
+
+totalSalary=$(( $totalEmpWorkingHrs * $EMP_RATE_PER_HR ))
+echo "Employee wage per month:" $totalSalary
